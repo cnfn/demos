@@ -23,8 +23,8 @@ public class HelloController {
         map.put("LocalDate", LocalDate.now());
         map.put("LocalDateTime", LocalDateTime.now());
 
-        map.put("date", new Date());
-        map.put("timestamp", new Timestamp(System.currentTimeMillis()));
+        map.put("Date", new Date());
+        map.put("Timestamp", new Timestamp(System.currentTimeMillis()));
 
         return map;
     }

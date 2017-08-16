@@ -1,7 +1,7 @@
-package com.example.config.json;
+package com.example.config.jackson;
 
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -14,10 +14,10 @@ import org.springframework.boot.jackson.JsonComponent;
  * @date 2017/08/16
  */
 @JsonComponent
-public class TimestampSerializer extends JsonSerializer<Timestamp> {
-    
+public class LocalDateSerializer extends JsonSerializer<LocalDate> {
+
     @Override
-    public void serialize(Timestamp value, JsonGenerator gen, SerializerProvider sp) throws IOException {
-        gen.writeString(value.toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+    public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider sp) throws IOException {
+        gen.writeString(value.format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 }

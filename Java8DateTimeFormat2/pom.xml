@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>Java8DateTimeFormat</artifactId>
+	<artifactId>Java8DateTimeFormat2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Java8DateTimeFormat</name>
+	<name>Java8DateTimeFormat2</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
