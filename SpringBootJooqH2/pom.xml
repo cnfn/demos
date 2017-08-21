@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>SpringBootJooqH2</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>SpringBootJooqH2</name>
+    <description>Demo project for Spring Boot</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <jooq.version>3.9.5</jooq.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>h2</id>
+            <build>
+                <plugins>
+                    <plugin>
+
+                        <!-- Specify the maven code generator plugin -->
+                        <!-- Use org.jooq            for the Open Source Edition
+                                 org.jooq.pro        for commercial editions,
+                                 org.jooq.pro-java-6 for commercial editions with Java 6 support,
+                                 org.jooq.trial      for the free trial edition
+
+                             Note: Only the Open Source Edition is hosted on Maven Central.
+                                   Import the others manually from your distribution -->
+                        <groupId>org.jooq</groupId>
+                        <artifactId>jooq-codegen-maven</artifactId>
+
+                        <!-- The plugin should hook into the generate goal -->
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+
+                        <!-- Manage the plugin's dependency. -->
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>${h2.version}</version>
+                            </dependency>
+                        </dependencies>
+
+                        <!-- Specify the plugin configuration. The configuration format is the same as for the standalone code generator -->
+                        <configuration>
+
+                            <!-- JDBC connection parameters -->
+                            <jdbc>
+                                <driver>org.h2.Driver</driver>
+                                <url>jdbc:h2:file:./h2db;FILE_LOCK=NO</url>
+                                <username>sa</username>
+                                <password></password>
+                            </jdbc>
+
+                            <!-- Generator parameters -->
+                            <generator>
+                                <name>org.jooq.util.DefaultGenerator</name>
+                                <database>
+                                    <name>org.jooq.util.h2.H2Database</name>
+                                    <includes>.*</includes>
+                                    <excludes/>
+                                    <inputSchema>PUBLIC</inputSchema>
+                                </database>
+
+                                <target>
+                                    <packageName>jooq.generated</packageName>
+                                    <directory>./src/main/java</directory>
+                                </target>
+                            </generator>
+
+                        </configuration>
+
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
