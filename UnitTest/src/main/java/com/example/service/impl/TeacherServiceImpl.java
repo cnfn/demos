@@ -22,4 +22,9 @@ public class TeacherServiceImpl implements TeacherService {
 
         return Arrays.asList(teacher1, teacher2);
     }
+
+    @Override
+    public void get(String teacherName) {
+        throw new RuntimeException("Teatcher.get");
+    }
 }

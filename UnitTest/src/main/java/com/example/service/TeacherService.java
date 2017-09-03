@@ -10,4 +10,6 @@ import com.example.dao.Teacher;
  */
 public interface TeacherService {
     List<Teacher> list(String schoolName);
+
+    void get(String teacherName);
 }
