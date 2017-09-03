@@ -7,39 +7,32 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * @author zhixiao.mzx
+ * @author Cnfn
  * @date 2017/09/03
  */
 @ExtendWith(MockitoExtension.class)
 class TestArgumentCaptor {
+    @Captor
+    private ArgumentCaptor<String> argumentCaptor;
 
     @Test
-    @DisplayName("测试 ArgumentCaptor")
+    @DisplayName("测试 ArgumentCaptor: 捕获调用参数")
     void testAnswer(@Mock Map<String, String> map) {
-        when(map.get(Mockito.anyString())).thenAnswer((Answer<String>)invocationOnMock -> {
-            String key = invocationOnMock.getArgument(0);
-            return generateValue(key);
-        });
+        when(map.get(Mockito.anyString())).thenReturn("value");
 
         String randomKey = RandomStringUtils.randomPrint(5);
-        assertThat(map.get(randomKey)).isEqualTo(generateValue(randomKey));
+        map.get(randomKey);
 
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
         verify(map).get(argumentCaptor.capture());
-
         assertThat(argumentCaptor.getValue()).isEqualTo(randomKey);
-    }
-
-    private String generateValue(String key) {
-        return "value_" + key;
     }
 }

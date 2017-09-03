@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 /**
- * @author zhixiao.mzx
+ * @author Cnfn
  * @date 2017/09/02
  */
 @ExtendWith(MockitoExtension.class)
-public class TestMockJunit5 {
+public class TestMockAndInjectMocksJunit5 {
     @InjectMocks
     private SchoolServiceImpl schoolService;
 

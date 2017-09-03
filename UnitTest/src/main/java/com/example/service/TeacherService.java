@@ -5,7 +5,7 @@ import java.util.List;
 import com.example.dao.Teacher;
 
 /**
- * @author zhixiao.mzx
+ * @author Cnfn
  * @date 2017/09/02
  */
 public interface TeacherService {
