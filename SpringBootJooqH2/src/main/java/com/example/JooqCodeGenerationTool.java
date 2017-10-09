@@ -4,10 +4,10 @@ import org.jooq.util.GenerationTool;
 import org.jooq.util.jaxb.Configuration;
 import org.jooq.util.jaxb.Database;
 import org.jooq.util.jaxb.ForcedType;
+import org.jooq.util.jaxb.Generate;
 import org.jooq.util.jaxb.Generator;
 import org.jooq.util.jaxb.Jdbc;
 import org.jooq.util.jaxb.Target;
-
 
 /**
  * @author zhixiao.mzx
@@ -23,6 +23,11 @@ public class JooqCodeGenerationTool {
                 .withUser("sa")
                 .withPassword(""))
             .withGenerator(new Generator()
+
+                // 使用 JSR-310 时间类型: https://stackoverflow.com/questions/31748327/jooq-support-for-jsr310
+                .withGenerate(new Generate()
+                    .withJavaTimeTypes(true))
+
                 .withDatabase(new Database()
                     .withName("org.jooq.util.h2.H2Database")
                     .withIncludes(".*")
@@ -37,12 +42,7 @@ public class JooqCodeGenerationTool {
                             .withUserType("com.alibaba.fastjson.JSONObject")
                             .withBinding("com.alibaba.jooq.type.binding.DbJson2JsonObjectBinding")
                             .withExpression(".*[^s]$")
-                            .withTypes("json"),
-                        new ForcedType()
-                            .withUserType("java.time.LocalDateTime")
-                            .withBinding("com.alibaba.jooq.type.binding.DateTime2LocalDateTimeBinding")
-                            .withExpression(".*")
-                            .withTypes("datetime")))
+                            .withTypes("json")))
                 .withTarget(new Target()
                     .withPackageName("jooq.generated")
                     .withDirectory("src/main/java")));
