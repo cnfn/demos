@@ -2,3 +2,7 @@
 target/
 .idea
 .mvn
+
+*.sw*
+SpringBootJooqH2/src/main/java/jooq/
+h2db.mv.db
