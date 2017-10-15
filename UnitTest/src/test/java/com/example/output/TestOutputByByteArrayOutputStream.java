@@ -19,16 +19,22 @@ public class TestOutputByByteArrayOutputStream {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
+    private PrintStream originSystemOut;
+    private PrintStream originSystemErr;
+
     @Before
     public void setupStreams() {
+        originSystemOut = System.out;
+        originSystemErr = System.err;
+
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
 
     @After
     public void clearStreams() {
-        System.setOut(null);
-        System.setErr(null);
+        System.setOut(originSystemOut);
+        System.setErr(originSystemErr);
     }
 
     @Test
