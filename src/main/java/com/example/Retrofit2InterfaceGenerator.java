@@ -4,9 +4,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -17,8 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @date 2017/11/19
  */
 @Configuration
-@EnableAutoConfiguration
-@ComponentScan(basePackageClasses = DemoApplication.class)
 public class Retrofit2InterfaceGenerator {
     @Bean
     public IpService ipServiceOnlyWithRetrofit2(@Value(value = "${ipInfo.host}") String host, @Value("${http.log.enable}") Boolean enableHttpLog) {

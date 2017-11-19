@@ -27,18 +27,23 @@ public class IpController {
     private IpService ipServiceWithRetrofit2AndRxJava2;
 
     @RequestMapping(value = "/{ipAddress:.+}")
-    public void ipInfo(@PathVariable String ipAddress) throws IOException, InterruptedException {
-        onlyUseRetrofit2Sync(ipAddress);
+    public IpInfo ipInfo(@PathVariable String ipAddress) throws IOException, InterruptedException {
+        IpInfo ipInfo = onlyUseRetrofit2Sync(ipAddress);
         onlyUseRetrofit2Async(ipAddress);
         useRetrofit2AndRxJava2(ipAddress);
+
+        return ipInfo;
     }
 
-    private void onlyUseRetrofit2Sync(String ipAddress) throws IOException {
+    private IpInfo onlyUseRetrofit2Sync(String ipAddress) throws IOException {
         log.warn("===begin Sync=======");
 
         Call<IpInfo> call = ipServiceOnlyWithRetrofit2.getIpInfo(ipAddress);
-        log.error("in sync: " + call.execute().body());
+        IpInfo ipInfo = call.execute().body();
+        log.error("in sync: " + ipInfo);
         log.warn("===end Sync=======");
+
+        return ipInfo;
     }
 
     private void onlyUseRetrofit2Async(String ipAddress) {
@@ -72,7 +77,5 @@ public class IpController {
             .subscribe();
 
         log.warn("===end RxJava=======");
-
-        TimeUnit.SECONDS.sleep(2);
     }
 }
