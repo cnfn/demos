@@ -1,7 +1,6 @@
 package com.example;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.schedulers.Schedulers;
 import lombok.extern.log4j.Log4j;

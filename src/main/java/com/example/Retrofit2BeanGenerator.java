@@ -15,9 +15,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @date 2017/11/19
  */
 @Configuration
-public class Retrofit2InterfaceGenerator {
+public class Retrofit2BeanGenerator {
     @Bean
-    public IpService ipServiceOnlyWithRetrofit2(@Value(value = "${ipInfo.host}") String host, @Value("${http.log.enable}") Boolean enableHttpLog) {
+    public IpService ipServiceOnlyWithRetrofit2(@Value("${ipInfo.host}") String host,
+                                                @Value("${http.log.enable}") Boolean enableHttpLog) {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(host)
             .client(getOkHttpClient(enableHttpLog))
@@ -28,7 +29,8 @@ public class Retrofit2InterfaceGenerator {
     }
 
     @Bean
-    public IpService ipServiceWithRetrofit2AndRxJava2(@Value(value = "${ipInfo.host}") String host, @Value("${http.log.enable}") Boolean enableHttpLog) {
+    public IpService ipServiceWithRetrofit2AndRxJava2(@Value("${ipInfo.host}") String host,
+                                                      @Value("${http.log.enable}") Boolean enableHttpLog) {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(host)
             .client(getOkHttpClient(enableHttpLog))

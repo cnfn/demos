@@ -1,7 +1,6 @@
 package com.example;
 
 import lombok.Data;
-import lombok.ToString;
 
 /**
  * @author Cnfn
