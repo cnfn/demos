@@ -28,12 +28,12 @@ public class IpController {
 
     @RequestMapping(value = "/{ipAddress:.+}")
     public void ipInfo(@PathVariable String ipAddress) throws IOException, InterruptedException {
-        onlyUseRetrofitSync(ipAddress);
-        onlyUseRetrofitAsync(ipAddress);
-        useRetrofitAndRxJava(ipAddress);
+        onlyUseRetrofit2Sync(ipAddress);
+        onlyUseRetrofit2Async(ipAddress);
+        useRetrofit2AndRxJava2(ipAddress);
     }
 
-    private void onlyUseRetrofitSync(String ipAddress) throws IOException {
+    private void onlyUseRetrofit2Sync(String ipAddress) throws IOException {
         log.warn("===begin Sync=======");
 
         Call<IpInfo> call = ipServiceOnlyWithRetrofit2.getIpInfo(ipAddress);
@@ -41,7 +41,7 @@ public class IpController {
         log.warn("===end Sync=======");
     }
 
-    private void onlyUseRetrofitAsync(String ipAddress) {
+    private void onlyUseRetrofit2Async(String ipAddress) {
         log.warn("===begin Async=======");
 
         Call<IpInfo> call = ipServiceOnlyWithRetrofit2.getIpInfo(ipAddress);
@@ -61,7 +61,7 @@ public class IpController {
         log.warn("===end Async=======");
     }
 
-    private void useRetrofitAndRxJava(String ipAddress) throws InterruptedException {
+    private void useRetrofit2AndRxJava2(String ipAddress) throws InterruptedException {
         log.warn("===begin RxJava=======");
 
         ipServiceWithRetrofit2AndRxJava2.getIpInfoWithRxJava(ipAddress)

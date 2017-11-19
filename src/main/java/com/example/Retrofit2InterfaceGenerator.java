@@ -21,14 +21,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @ComponentScan(basePackageClasses = DemoApplication.class)
 public class Retrofit2InterfaceGenerator {
     @Bean
-    public IpService ipServiceOnlyWithRetrofit2(@Value(value = "${ipInfo.host}") String host) {
-        //HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        //httpLoggingInterceptor.setLevel(Level.BODY);
-        //OkHttpClient client = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
-
+    public IpService ipServiceOnlyWithRetrofit2(@Value(value = "${ipInfo.host}") String host, @Value("${http.log.enable}") Boolean enableHttpLog) {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(host)
-            //.client(client)
+            .client(getOkHttpClient(enableHttpLog))
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -36,13 +32,25 @@ public class Retrofit2InterfaceGenerator {
     }
 
     @Bean
-    public IpService ipServiceWithRetrofit2AndRxJava2(@Value(value = "${ipInfo.host}") String host) {
+    public IpService ipServiceWithRetrofit2AndRxJava2(@Value(value = "${ipInfo.host}") String host, @Value("${http.log.enable}") Boolean enableHttpLog) {
         Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(host)
+            .client(getOkHttpClient(enableHttpLog))
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
 
         return retrofit.create(IpService.class);
     }
+
+    private OkHttpClient getOkHttpClient(Boolean enableHttpLog) {
+        if (null == enableHttpLog || !enableHttpLog) {
+            return new OkHttpClient.Builder().build();
+        }
+
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        httpLoggingInterceptor.setLevel(Level.BODY);
+        return new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
+    }
+
 }
