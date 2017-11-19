@@ -33,19 +33,6 @@ public class IpController {
         useRetrofitAndRxJava(ipAddress);
     }
 
-    private void useRetrofitAndRxJava(String ipAddress) throws InterruptedException {
-        log.warn("===begin RxJava=======");
-
-        ipServiceWithRetrofit2AndRxJava2.getIpInfoWithRxJava(ipAddress)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(Schedulers.trampoline())
-            .subscribe(ipInfo -> log.error("ip RxJava: " + ipInfo));
-
-        log.warn("===end RxJava=======");
-
-        TimeUnit.SECONDS.sleep(2);
-    }
-
     private void onlyUseRetrofitSync(String ipAddress) throws IOException {
         log.warn("===begin Sync=======");
 
@@ -67,10 +54,25 @@ public class IpController {
 
             @Override
             public void onFailure(Call<IpInfo> call, Throwable t) {
-                log.error(t.getMessage());
+                log.error("unknonw error: ", t);
             }
         });
 
         log.warn("===end Async=======");
+    }
+
+    private void useRetrofitAndRxJava(String ipAddress) throws InterruptedException {
+        log.warn("===begin RxJava=======");
+
+        ipServiceWithRetrofit2AndRxJava2.getIpInfoWithRxJava(ipAddress)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.io())
+            .doOnError(e -> log.error("unknown error, ip: " + ipAddress + ", error: ", e))
+            .doOnNext(ipInfo -> log.warn("in RxJava: " + ipInfo))
+            .subscribe();
+
+        log.warn("===end RxJava=======");
+
+        TimeUnit.SECONDS.sleep(2);
     }
 }
