@@ -1,0 +1,35 @@
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.11'
+    id 'org.springframework.boot' version '1.5.8.RELEASE'
+}
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+lombok {
+    sha256 = "" // skip verifyLombok task
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.1.6'
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.3.0'
+    compile group: 'com.squareup.retrofit2', name: 'converter-gson', version: '2.3.0'
+    compile group: 'com.squareup.retrofit2', name: 'adapter-rxjava2', version: '2.3.0'
+    compile group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.8.0'
+    compile group: 'com.google.code.gson', name: 'gson'
+    compile group: 'org.projectlombok', name: 'lombok'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    testCompile group: 'junit', name: 'junit'
+}
+
+configurations.all {
+    resolutionStrategy {  failOnVersionConflict() }
+}
